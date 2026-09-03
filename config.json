@@ -17,5 +17,13 @@
     "high": 0.85,
     "medium": 0.65,
     "anomaly_reconstruction_percentile": 95
+  },
+  "fusion_weights": {
+    "supervised": 45,
+    "anomaly": 20,
+    "sequence": 10,
+    "telemetry": 10,
+    "sensor": 5,
+    "asset": 10
   }
 }
