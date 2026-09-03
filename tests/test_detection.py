@@ -78,3 +78,22 @@ def test_alert_contains_analyst_evidence():
     } <= alert.keys()
     assert alert["risk_score"] == sum(alert["risk_components"].values())
     assert alert["mitre_technique"] == "T1110 Brute Force"
+
+
+def test_alert_confidence_matches_selected_threat():
+    detection = importlib.import_module("scripts.detection")
+    evidence = detection.DetectionEvidence(
+        predicted_threat="DDoS",
+        supervised_confidence=0.8,
+        anomaly_score=0.5,
+        sequence_confidence=0.0,
+        heuristic_score=0.6,
+        model_probabilities={"Benign": 0.1, "C2Beacon": 0.8, "DDoS": 0.3},
+        heuristic_probabilities={"Benign": 0.4, "DDoS": 0.6},
+    )
+
+    alert = detection.build_alert(
+        example_row(), evidence, detection.calculate_risk(evidence, example_row())
+    )
+
+    assert alert["confidence"] == 0.6

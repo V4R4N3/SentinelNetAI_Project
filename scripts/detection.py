@@ -46,6 +46,7 @@ class DetectionEvidence:
     heuristic_score: float
     model_probabilities: dict
     heuristic_probabilities: dict
+    predicted_confidence: float = None
 
 
 @dataclass
@@ -185,7 +186,7 @@ def score_flow(row, bundle):
     ]
     if sequence_label is not None:
         candidates.append((sequence_confidence, sequence_label))
-    predicted_threat = max(candidates)[1]
+    predicted_confidence, predicted_threat = max(candidates)
     return DetectionEvidence(
         predicted_threat=predicted_threat,
         supervised_confidence=supervised_confidence,
@@ -194,6 +195,7 @@ def score_flow(row, bundle):
         heuristic_score=heuristic_score,
         model_probabilities=model_probabilities,
         heuristic_probabilities=heuristic_probabilities,
+        predicted_confidence=predicted_confidence,
     )
 
 
@@ -211,12 +213,18 @@ def calculate_risk(evidence, row):
 
 def build_alert(row, evidence, risk):
     tactic, technique = ATTACK_MAP[evidence.predicted_threat]
+    predicted_confidence = evidence.predicted_confidence
+    if predicted_confidence is None:
+        predicted_confidence = max(
+            evidence.model_probabilities.get(evidence.predicted_threat, 0.0),
+            evidence.heuristic_probabilities.get(evidence.predicted_threat, 0.0),
+        )
     return {
         'timestamp': row['timestamp'],
         'src_ip': row['src_ip'],
         'dst_ip': row['dst_ip'],
         'predicted_threat': evidence.predicted_threat,
-        'confidence': round(evidence.supervised_confidence, 4),
+        'confidence': round(predicted_confidence, 4),
         'risk_score': risk.total,
         'risk_components': risk.components,
         'mitre_tactic': tactic,
