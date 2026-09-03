@@ -68,6 +68,49 @@ class AutoEncoder(nn.Module):
         return self.decoder(self.encoder(values))
 
 
+class SequenceGRU(nn.Module):
+    def __init__(self, input_dim, hidden_dim, classes, layers=1, dropout=0.0):
+        super().__init__()
+        self.config = {
+            'input_dim': input_dim,
+            'hidden_dim': hidden_dim,
+            'classes': classes,
+            'layers': layers,
+            'dropout': dropout,
+        }
+        recurrent_dropout = dropout if layers > 1 else 0.0
+        self.gru = nn.GRU(
+            input_dim,
+            hidden_dim,
+            num_layers=layers,
+            batch_first=True,
+            dropout=recurrent_dropout,
+        )
+        self.classifier = nn.Linear(hidden_dim, classes)
+
+    def forward(self, values):
+        output, _ = self.gru(values)
+        return self.classifier(output[:, -1, :])
+
+
+def make_sequences(values, labels, timestamps, window):
+    if window < 1:
+        raise ValueError('window must be at least 1')
+    values = np.asarray(values)
+    labels = np.asarray(labels)
+    timestamps = np.asarray(timestamps)
+    if not (len(values) == len(labels) == len(timestamps)):
+        raise ValueError('values, labels, and timestamps must have equal lengths')
+    if len(values) <= window:
+        raise ValueError('sequence input must contain more rows than the window')
+    order = np.argsort(timestamps, kind='stable')
+    ordered_values = values[order]
+    ordered_labels = labels[order]
+    sequences = [ordered_values[index-window:index] for index in range(window, len(values))]
+    targets = ordered_labels[window:]
+    return np.asarray(sequences, dtype=np.float32), np.asarray(targets)
+
+
 def save_supervised_artifacts(model, metadata, model_path, metadata_path):
     model_path = Path(model_path)
     metadata_path = Path(metadata_path)
@@ -122,6 +165,26 @@ def save_autoencoder_artifact(model, metadata, model_path, metadata_path):
 def load_autoencoder_artifact(model_path, metadata_path):
     checkpoint = torch.load(model_path, map_location='cpu', weights_only=True)
     model = AutoEncoder(**checkpoint['architecture'])
+    model.load_state_dict(checkpoint['state_dict'])
+    model.eval()
+    return model, joblib.load(metadata_path)
+
+
+def save_sequence_artifact(model, metadata, model_path, metadata_path):
+    model_path = Path(model_path)
+    metadata_path = Path(metadata_path)
+    model_path.parent.mkdir(parents=True, exist_ok=True)
+    metadata_path.parent.mkdir(parents=True, exist_ok=True)
+    torch.save(
+        {'state_dict': model.state_dict(), 'architecture': model.config},
+        model_path,
+    )
+    joblib.dump(metadata, metadata_path)
+
+
+def load_sequence_artifact(model_path, metadata_path):
+    checkpoint = torch.load(model_path, map_location='cpu', weights_only=True)
+    model = SequenceGRU(**checkpoint['architecture'])
     model.load_state_dict(checkpoint['state_dict'])
     model.eval()
     return model, joblib.load(metadata_path)
