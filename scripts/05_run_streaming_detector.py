@@ -2,8 +2,8 @@
 import argparse, json, time, math
 from pathlib import Path
 import pandas as pd, numpy as np, joblib, torch
-from torch import nn
 from sentinel_utils import FEATURES
+from model_defs import IDSNet
 
 CLASSES=['Benign','PortScan','DDoS','BruteForce','Exfiltration','C2Beacon']
 ATTACK_MAP={
@@ -13,11 +13,6 @@ ATTACK_MAP={
  'Exfiltration':['Exfiltration','T1041 Exfiltration Over C2 Channel'],
  'C2Beacon':['Command and Control','T1071 Application Layer Protocol'],
  'Benign':['None','None']}
-class IDSNet(nn.Module):
-    def __init__(self, in_dim, classes, hidden=96, dropout=0.15):
-        super().__init__(); self.net=nn.Sequential(nn.Linear(in_dim,hidden), nn.BatchNorm1d(hidden), nn.ReLU(), nn.Linear(hidden,hidden), nn.ReLU(), nn.Linear(hidden,classes))
-    def forward(self,x): return self.net(x)
-
 def heuristic(row):
     scores={c:0.02 for c in CLASSES}; scores['Benign']=0.4
     if row['unique_dst_ports_5m']>30 or row['failed_conn_5m']>20: scores['PortScan']+=0.7
