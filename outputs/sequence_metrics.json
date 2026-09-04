@@ -1,0 +1,146 @@
+{
+  "classes": [
+    "Benign",
+    "BruteForce",
+    "C2Beacon",
+    "DDoS",
+    "Exfiltration",
+    "PortScan"
+  ],
+  "macro_f1": 0.12233491221930842,
+  "weighted_f1": 0.17952163688730666,
+  "classification_report": {
+    "Benign": {
+      "precision": 0.6390977443609023,
+      "recall": 0.13776337115072934,
+      "f1-score": 0.22666666666666666,
+      "support": 1851.0
+    },
+    "BruteForce": {
+      "precision": 0.0673854447439353,
+      "recall": 0.1152073732718894,
+      "f1-score": 0.08503401360544217,
+      "support": 217.0
+    },
+    "C2Beacon": {
+      "precision": 0.055062166962699825,
+      "recall": 0.1781609195402299,
+      "f1-score": 0.08412483039348712,
+      "support": 174.0
+    },
+    "DDoS": {
+      "precision": 0.08785046728971962,
+      "recall": 0.1821705426356589,
+      "f1-score": 0.11853720050441362,
+      "support": 258.0
+    },
+    "Exfiltration": {
+      "precision": 0.07058823529411765,
+      "recall": 0.2647058823529412,
+      "f1-score": 0.11145510835913312,
+      "support": 204.0
+    },
+    "PortScan": {
+      "precision": 0.09749303621169916,
+      "recall": 0.12152777777777778,
+      "f1-score": 0.10819165378670788,
+      "support": 288.0
+    },
+    "accuracy": 0.14939839572192512,
+    "macro avg": {
+      "precision": 0.1695795158105123,
+      "recall": 0.16658931112153777,
+      "f1-score": 0.12233491221930842,
+      "support": 2992.0
+    },
+    "weighted avg": {
+      "precision": 0.42523957164528436,
+      "recall": 0.14939839572192512,
+      "f1-score": 0.17952163688730666,
+      "support": 2992.0
+    }
+  },
+  "confusion_matrix": [
+    [
+      255,
+      236,
+      338,
+      320,
+      470,
+      232
+    ],
+    [
+      20,
+      25,
+      56,
+      38,
+      60,
+      18
+    ],
+    [
+      25,
+      25,
+      31,
+      29,
+      42,
+      22
+    ],
+    [
+      29,
+      25,
+      49,
+      47,
+      77,
+      31
+    ],
+    [
+      29,
+      24,
+      36,
+      40,
+      54,
+      21
+    ],
+    [
+      41,
+      36,
+      53,
+      61,
+      62,
+      35
+    ]
+  ],
+  "window": 8,
+  "model_type": "PyTorch GRU next-flow sequence classifier",
+  "sequence_contract": "predict each flow label from the preceding window of flows",
+  "split_strategy": "chronological 75/25; windows do not cross the split boundary",
+  "features": [
+    "duration",
+    "packets",
+    "bytes_out",
+    "bytes_in",
+    "bytes_per_sec",
+    "packets_per_sec",
+    "outbound_ratio",
+    "unique_dst_ports_5m",
+    "failed_conn_5m",
+    "dns_entropy",
+    "beacon_score",
+    "burst_score",
+    "suricata_alert_count",
+    "asset_criticality"
+  ],
+  "seed": 42,
+  "epochs": 6,
+  "batch_size": 256,
+  "train_sequences": 8992,
+  "test_sequences": 2992,
+  "architecture": {
+    "input_dim": 14,
+    "hidden_dim": 48,
+    "classes": 6,
+    "layers": 1,
+    "dropout": 0.0
+  },
+  "training_seconds": 20.306
+}

@@ -1,0 +1,385 @@
+{
+  "processed": 1000,
+  "alerts": 384,
+  "medium_threshold": 65,
+  "risk_formula": {
+    "supervised": 45,
+    "anomaly": 20,
+    "sequence": 10,
+    "telemetry": 10,
+    "sensor": 5,
+    "asset": 10
+  },
+  "top_alerts": [
+    {
+      "timestamp": "2026-01-01T00:04:20",
+      "src_ip": "10.10.4.137",
+      "dst_ip": "10.10.7.146",
+      "predicted_threat": "DDoS",
+      "confidence": 0.9999,
+      "risk_score": 88,
+      "risk_components": {
+        "supervised": 45,
+        "anomaly": 20,
+        "sequence": 2,
+        "telemetry": 6,
+        "sensor": 5,
+        "asset": 10
+      },
+      "mitre_tactic": "Impact",
+      "mitre_technique": "T1498 Network Denial of Service",
+      "evidence": {
+        "anomaly_score": 1.0,
+        "sequence_confidence": 0.1891,
+        "telemetry_score": 0.6,
+        "model_probabilities": {
+          "Benign": 0.0,
+          "BruteForce": 0.0,
+          "C2Beacon": 0.0,
+          "DDoS": 0.9999,
+          "Exfiltration": 0.0001,
+          "PortScan": 0.0
+        },
+        "dst_port": 443,
+        "bytes_out": 80706,
+        "packets_per_sec": 3474.0165,
+        "unique_dst_ports_5m": 1,
+        "failed_conn_5m": 2,
+        "beacon_score": 0.0861
+      }
+    },
+    {
+      "timestamp": "2026-01-01T00:12:06",
+      "src_ip": "10.10.2.189",
+      "dst_ip": "10.10.8.164",
+      "predicted_threat": "DDoS",
+      "confidence": 0.9999,
+      "risk_score": 88,
+      "risk_components": {
+        "supervised": 45,
+        "anomaly": 20,
+        "sequence": 2,
+        "telemetry": 6,
+        "sensor": 5,
+        "asset": 10
+      },
+      "mitre_tactic": "Impact",
+      "mitre_technique": "T1498 Network Denial of Service",
+      "evidence": {
+        "anomaly_score": 1.0,
+        "sequence_confidence": 0.1899,
+        "telemetry_score": 0.6,
+        "model_probabilities": {
+          "Benign": 0.0,
+          "BruteForce": 0.0,
+          "C2Beacon": 0.0,
+          "DDoS": 0.9999,
+          "Exfiltration": 0.0,
+          "PortScan": 0.0
+        },
+        "dst_port": 443,
+        "bytes_out": 1983639,
+        "packets_per_sec": 2985.098,
+        "unique_dst_ports_5m": 3,
+        "failed_conn_5m": 0,
+        "beacon_score": 0.1694
+      }
+    },
+    {
+      "timestamp": "2026-01-01T00:18:35",
+      "src_ip": "10.10.3.161",
+      "dst_ip": "10.10.5.44",
+      "predicted_threat": "DDoS",
+      "confidence": 0.9996,
+      "risk_score": 88,
+      "risk_components": {
+        "supervised": 45,
+        "anomaly": 20,
+        "sequence": 2,
+        "telemetry": 6,
+        "sensor": 5,
+        "asset": 10
+      },
+      "mitre_tactic": "Impact",
+      "mitre_technique": "T1498 Network Denial of Service",
+      "evidence": {
+        "anomaly_score": 1.0,
+        "sequence_confidence": 0.1904,
+        "telemetry_score": 0.6,
+        "model_probabilities": {
+          "Benign": 0.0001,
+          "BruteForce": 0.0,
+          "C2Beacon": 0.0001,
+          "DDoS": 0.9996,
+          "Exfiltration": 0.0002,
+          "PortScan": 0.0
+        },
+        "dst_port": 443,
+        "bytes_out": 1008625,
+        "packets_per_sec": 1153.2109,
+        "unique_dst_ports_5m": 4,
+        "failed_conn_5m": 1,
+        "beacon_score": 0.1641
+      }
+    },
+    {
+      "timestamp": "2026-01-01T00:20:27",
+      "src_ip": "10.10.3.36",
+      "dst_ip": "10.10.5.30",
+      "predicted_threat": "DDoS",
+      "confidence": 0.9994,
+      "risk_score": 88,
+      "risk_components": {
+        "supervised": 45,
+        "anomaly": 20,
+        "sequence": 2,
+        "telemetry": 6,
+        "sensor": 5,
+        "asset": 10
+      },
+      "mitre_tactic": "Impact",
+      "mitre_technique": "T1498 Network Denial of Service",
+      "evidence": {
+        "anomaly_score": 1.0,
+        "sequence_confidence": 0.1886,
+        "telemetry_score": 0.6,
+        "model_probabilities": {
+          "Benign": 0.0002,
+          "BruteForce": 0.0001,
+          "C2Beacon": 0.0001,
+          "DDoS": 0.9994,
+          "Exfiltration": 0.0001,
+          "PortScan": 0.0001
+        },
+        "dst_port": 443,
+        "bytes_out": 522397,
+        "packets_per_sec": 4760.764,
+        "unique_dst_ports_5m": 5,
+        "failed_conn_5m": 2,
+        "beacon_score": 0.1707
+      }
+    },
+    {
+      "timestamp": "2026-01-01T00:20:34",
+      "src_ip": "10.10.4.100",
+      "dst_ip": "10.10.8.65",
+      "predicted_threat": "BruteForce",
+      "confidence": 0.9959,
+      "risk_score": 88,
+      "risk_components": {
+        "supervised": 45,
+        "anomaly": 20,
+        "sequence": 2,
+        "telemetry": 6,
+        "sensor": 5,
+        "asset": 10
+      },
+      "mitre_tactic": "Credential Access",
+      "mitre_technique": "T1110 Brute Force",
+      "evidence": {
+        "anomaly_score": 1.0,
+        "sequence_confidence": 0.2001,
+        "telemetry_score": 0.6,
+        "model_probabilities": {
+          "Benign": 0.0015,
+          "BruteForce": 0.9959,
+          "C2Beacon": 0.0003,
+          "DDoS": 0.0005,
+          "Exfiltration": 0.0012,
+          "PortScan": 0.0006
+        },
+        "dst_port": 22,
+        "bytes_out": 128246,
+        "packets_per_sec": 13.5163,
+        "unique_dst_ports_5m": 2,
+        "failed_conn_5m": 36,
+        "beacon_score": 0.1536
+      }
+    },
+    {
+      "timestamp": "2026-01-01T00:22:49",
+      "src_ip": "10.10.8.62",
+      "dst_ip": "10.10.4.152",
+      "predicted_threat": "DDoS",
+      "confidence": 0.9995,
+      "risk_score": 88,
+      "risk_components": {
+        "supervised": 45,
+        "anomaly": 20,
+        "sequence": 2,
+        "telemetry": 6,
+        "sensor": 5,
+        "asset": 10
+      },
+      "mitre_tactic": "Impact",
+      "mitre_technique": "T1498 Network Denial of Service",
+      "evidence": {
+        "anomaly_score": 1.0,
+        "sequence_confidence": 0.1823,
+        "telemetry_score": 0.6,
+        "model_probabilities": {
+          "Benign": 0.0,
+          "BruteForce": 0.0002,
+          "C2Beacon": 0.0,
+          "DDoS": 0.9995,
+          "Exfiltration": 0.0001,
+          "PortScan": 0.0001
+        },
+        "dst_port": 80,
+        "bytes_out": 27409,
+        "packets_per_sec": 681.7854,
+        "unique_dst_ports_5m": 4,
+        "failed_conn_5m": 3,
+        "beacon_score": 0.0012
+      }
+    },
+    {
+      "timestamp": "2026-01-01T00:27:44",
+      "src_ip": "10.10.8.229",
+      "dst_ip": "10.10.6.46",
+      "predicted_threat": "DDoS",
+      "confidence": 0.9997,
+      "risk_score": 88,
+      "risk_components": {
+        "supervised": 45,
+        "anomaly": 20,
+        "sequence": 2,
+        "telemetry": 6,
+        "sensor": 5,
+        "asset": 10
+      },
+      "mitre_tactic": "Impact",
+      "mitre_technique": "T1498 Network Denial of Service",
+      "evidence": {
+        "anomaly_score": 1.0,
+        "sequence_confidence": 0.1755,
+        "telemetry_score": 0.6,
+        "model_probabilities": {
+          "Benign": 0.0,
+          "BruteForce": 0.0001,
+          "C2Beacon": 0.0,
+          "DDoS": 0.9997,
+          "Exfiltration": 0.0001,
+          "PortScan": 0.0
+        },
+        "dst_port": 80,
+        "bytes_out": 1737241,
+        "packets_per_sec": 677.8565,
+        "unique_dst_ports_5m": 3,
+        "failed_conn_5m": 2,
+        "beacon_score": 0.0278
+      }
+    },
+    {
+      "timestamp": "2026-01-01T00:37:49",
+      "src_ip": "10.10.2.24",
+      "dst_ip": "203.0.113.89",
+      "predicted_threat": "Exfiltration",
+      "confidence": 1.0,
+      "risk_score": 88,
+      "risk_components": {
+        "supervised": 45,
+        "anomaly": 20,
+        "sequence": 2,
+        "telemetry": 6,
+        "sensor": 5,
+        "asset": 10
+      },
+      "mitre_tactic": "Exfiltration",
+      "mitre_technique": "T1041 Exfiltration Over C2 Channel",
+      "evidence": {
+        "anomaly_score": 1.0,
+        "sequence_confidence": 0.1887,
+        "telemetry_score": 0.6308,
+        "model_probabilities": {
+          "Benign": 0.0,
+          "BruteForce": 0.0,
+          "C2Beacon": 0.0,
+          "DDoS": 0.0,
+          "Exfiltration": 1.0,
+          "PortScan": 0.0
+        },
+        "dst_port": 8443,
+        "bytes_out": 39708466,
+        "packets_per_sec": 7.3136,
+        "unique_dst_ports_5m": 2,
+        "failed_conn_5m": 0,
+        "beacon_score": 0.0582
+      }
+    },
+    {
+      "timestamp": "2026-01-01T00:43:17",
+      "src_ip": "10.10.2.148",
+      "dst_ip": "10.10.7.8",
+      "predicted_threat": "DDoS",
+      "confidence": 0.9972,
+      "risk_score": 88,
+      "risk_components": {
+        "supervised": 45,
+        "anomaly": 20,
+        "sequence": 2,
+        "telemetry": 6,
+        "sensor": 5,
+        "asset": 10
+      },
+      "mitre_tactic": "Impact",
+      "mitre_technique": "T1498 Network Denial of Service",
+      "evidence": {
+        "anomaly_score": 1.0,
+        "sequence_confidence": 0.1992,
+        "telemetry_score": 0.6,
+        "model_probabilities": {
+          "Benign": 0.0005,
+          "BruteForce": 0.0007,
+          "C2Beacon": 0.0002,
+          "DDoS": 0.9972,
+          "Exfiltration": 0.0009,
+          "PortScan": 0.0004
+        },
+        "dst_port": 443,
+        "bytes_out": 215568,
+        "packets_per_sec": 516.0654,
+        "unique_dst_ports_5m": 1,
+        "failed_conn_5m": 1,
+        "beacon_score": 0.1415
+      }
+    },
+    {
+      "timestamp": "2026-01-01T00:47:04",
+      "src_ip": "10.10.4.35",
+      "dst_ip": "10.10.1.73",
+      "predicted_threat": "DDoS",
+      "confidence": 0.9997,
+      "risk_score": 88,
+      "risk_components": {
+        "supervised": 45,
+        "anomaly": 20,
+        "sequence": 2,
+        "telemetry": 6,
+        "sensor": 5,
+        "asset": 10
+      },
+      "mitre_tactic": "Impact",
+      "mitre_technique": "T1498 Network Denial of Service",
+      "evidence": {
+        "anomaly_score": 1.0,
+        "sequence_confidence": 0.2125,
+        "telemetry_score": 0.6,
+        "model_probabilities": {
+          "Benign": 0.0001,
+          "BruteForce": 0.0001,
+          "C2Beacon": 0.0,
+          "DDoS": 0.9997,
+          "Exfiltration": 0.0001,
+          "PortScan": 0.0
+        },
+        "dst_port": 53,
+        "bytes_out": 622760,
+        "packets_per_sec": 2153.2179,
+        "unique_dst_ports_5m": 5,
+        "failed_conn_5m": 2,
+        "beacon_score": 0.0763
+      }
+    }
+  ]
+}

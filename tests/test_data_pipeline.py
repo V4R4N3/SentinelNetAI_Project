@@ -23,6 +23,12 @@ def test_different_seed_changes_generated_dataset(tmp_path):
     assert first.read_bytes() != second.read_bytes()
 
 
+def test_generated_dataset_uses_repository_line_endings(tmp_path):
+    path = generator.generate_dataset(10, tmp_path / "flows.csv", seed=42)
+
+    assert b"\r\n" not in path.read_bytes()
+
+
 def test_generated_dataset_has_expected_schema(tmp_path):
     path = generator.generate_dataset(60, tmp_path / "flows.csv", seed=42)
     dataframe = pd.read_csv(path)

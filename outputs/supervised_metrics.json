@@ -1,0 +1,149 @@
+{
+  "classes": [
+    "Benign",
+    "BruteForce",
+    "C2Beacon",
+    "DDoS",
+    "Exfiltration",
+    "PortScan"
+  ],
+  "macro_f1": 0.9987246862246862,
+  "weighted_f1": 0.9993336317086317,
+  "classification_report": {
+    "Benign": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 1850.0
+    },
+    "BruteForce": {
+      "precision": 0.9914893617021276,
+      "recall": 1.0,
+      "f1-score": 0.9957264957264957,
+      "support": 233.0
+    },
+    "C2Beacon": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 179.0
+    },
+    "DDoS": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 248.0
+    },
+    "Exfiltration": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "support": 193.0
+    },
+    "PortScan": {
+      "precision": 1.0,
+      "recall": 0.9932659932659933,
+      "f1-score": 0.9966216216216216,
+      "support": 297.0
+    },
+    "accuracy": 0.9993333333333333,
+    "macro avg": {
+      "precision": 0.9985815602836879,
+      "recall": 0.9988776655443322,
+      "f1-score": 0.9987246862246862,
+      "support": 3000.0
+    },
+    "weighted avg": {
+      "precision": 0.9993390070921986,
+      "recall": 0.9993333333333333,
+      "f1-score": 0.9993336317086317,
+      "support": 3000.0
+    }
+  },
+  "confusion_matrix": [
+    [
+      1850,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      233,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      179,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      248,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      193,
+      0
+    ],
+    [
+      0,
+      2,
+      0,
+      0,
+      0,
+      295
+    ]
+  ],
+  "features": [
+    "duration",
+    "packets",
+    "bytes_out",
+    "bytes_in",
+    "bytes_per_sec",
+    "packets_per_sec",
+    "outbound_ratio",
+    "unique_dst_ports_5m",
+    "failed_conn_5m",
+    "dns_entropy",
+    "beacon_score",
+    "burst_score",
+    "suricata_alert_count",
+    "asset_criticality"
+  ],
+  "seed": 42,
+  "epochs": 8,
+  "batch_size": 256,
+  "train_rows": 9000,
+  "test_rows": 3000,
+  "class_counts": [
+    5551,
+    699,
+    535,
+    744,
+    579,
+    892
+  ],
+  "architecture": {
+    "in_dim": 14,
+    "classes": 6,
+    "hidden": 96,
+    "dropout": 0.15
+  },
+  "training_seconds": 18.067
+}

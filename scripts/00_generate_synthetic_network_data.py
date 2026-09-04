@@ -59,7 +59,7 @@ def generate_dataset(rows, output, seed=42):
             ts += timedelta(seconds=rng.randint(1,7))
             row=row_for(label,ts,rng)
             if writer is None:
-                writer=csv.DictWriter(f,fieldnames=list(row.keys())); writer.writeheader()
+                writer=csv.DictWriter(f,fieldnames=list(row.keys()),lineterminator='\n'); writer.writeheader()
             writer.writerow(row)
     return output
 

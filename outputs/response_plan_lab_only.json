@@ -1,0 +1,225 @@
+{
+  "safety": "Dry-run recommendations only. Do not execute on production networks.",
+  "actions": [
+    {
+      "src_ip": "10.10.4.137",
+      "dst_ip": "10.10.7.146",
+      "threat": "DDoS",
+      "risk_score": 88,
+      "recommended_action": "recommend_isolate_lab_host",
+      "mode": "dry-run",
+      "human_approval_required": true,
+      "source_is_lab_private": true,
+      "reason": "High fused risk on an RFC1918 lab source; analyst validation required before isolation."
+    },
+    {
+      "src_ip": "10.10.2.189",
+      "dst_ip": "10.10.8.164",
+      "threat": "DDoS",
+      "risk_score": 88,
+      "recommended_action": "recommend_isolate_lab_host",
+      "mode": "dry-run",
+      "human_approval_required": true,
+      "source_is_lab_private": true,
+      "reason": "High fused risk on an RFC1918 lab source; analyst validation required before isolation."
+    },
+    {
+      "src_ip": "10.10.3.161",
+      "dst_ip": "10.10.5.44",
+      "threat": "DDoS",
+      "risk_score": 88,
+      "recommended_action": "recommend_isolate_lab_host",
+      "mode": "dry-run",
+      "human_approval_required": true,
+      "source_is_lab_private": true,
+      "reason": "High fused risk on an RFC1918 lab source; analyst validation required before isolation."
+    },
+    {
+      "src_ip": "10.10.3.36",
+      "dst_ip": "10.10.5.30",
+      "threat": "DDoS",
+      "risk_score": 88,
+      "recommended_action": "recommend_isolate_lab_host",
+      "mode": "dry-run",
+      "human_approval_required": true,
+      "source_is_lab_private": true,
+      "reason": "High fused risk on an RFC1918 lab source; analyst validation required before isolation."
+    },
+    {
+      "src_ip": "10.10.4.100",
+      "dst_ip": "10.10.8.65",
+      "threat": "BruteForce",
+      "risk_score": 88,
+      "recommended_action": "recommend_isolate_lab_host",
+      "mode": "dry-run",
+      "human_approval_required": true,
+      "source_is_lab_private": true,
+      "reason": "High fused risk on an RFC1918 lab source; analyst validation required before isolation."
+    },
+    {
+      "src_ip": "10.10.8.62",
+      "dst_ip": "10.10.4.152",
+      "threat": "DDoS",
+      "risk_score": 88,
+      "recommended_action": "recommend_isolate_lab_host",
+      "mode": "dry-run",
+      "human_approval_required": true,
+      "source_is_lab_private": true,
+      "reason": "High fused risk on an RFC1918 lab source; analyst validation required before isolation."
+    },
+    {
+      "src_ip": "10.10.8.229",
+      "dst_ip": "10.10.6.46",
+      "threat": "DDoS",
+      "risk_score": 88,
+      "recommended_action": "recommend_isolate_lab_host",
+      "mode": "dry-run",
+      "human_approval_required": true,
+      "source_is_lab_private": true,
+      "reason": "High fused risk on an RFC1918 lab source; analyst validation required before isolation."
+    },
+    {
+      "src_ip": "10.10.2.24",
+      "dst_ip": "203.0.113.89",
+      "threat": "Exfiltration",
+      "risk_score": 88,
+      "recommended_action": "recommend_isolate_lab_host",
+      "mode": "dry-run",
+      "human_approval_required": true,
+      "source_is_lab_private": true,
+      "reason": "High fused risk on an RFC1918 lab source; analyst validation required before isolation."
+    },
+    {
+      "src_ip": "10.10.2.148",
+      "dst_ip": "10.10.7.8",
+      "threat": "DDoS",
+      "risk_score": 88,
+      "recommended_action": "recommend_isolate_lab_host",
+      "mode": "dry-run",
+      "human_approval_required": true,
+      "source_is_lab_private": true,
+      "reason": "High fused risk on an RFC1918 lab source; analyst validation required before isolation."
+    },
+    {
+      "src_ip": "10.10.4.35",
+      "dst_ip": "10.10.1.73",
+      "threat": "DDoS",
+      "risk_score": 88,
+      "recommended_action": "recommend_isolate_lab_host",
+      "mode": "dry-run",
+      "human_approval_required": true,
+      "source_is_lab_private": true,
+      "reason": "High fused risk on an RFC1918 lab source; analyst validation required before isolation."
+    },
+    {
+      "src_ip": "10.10.5.237",
+      "dst_ip": "203.0.113.30",
+      "threat": "Exfiltration",
+      "risk_score": 88,
+      "recommended_action": "recommend_isolate_lab_host",
+      "mode": "dry-run",
+      "human_approval_required": true,
+      "source_is_lab_private": true,
+      "reason": "High fused risk on an RFC1918 lab source; analyst validation required before isolation."
+    },
+    {
+      "src_ip": "10.10.1.207",
+      "dst_ip": "10.10.7.25",
+      "threat": "DDoS",
+      "risk_score": 88,
+      "recommended_action": "recommend_isolate_lab_host",
+      "mode": "dry-run",
+      "human_approval_required": true,
+      "source_is_lab_private": true,
+      "reason": "High fused risk on an RFC1918 lab source; analyst validation required before isolation."
+    },
+    {
+      "src_ip": "10.10.5.220",
+      "dst_ip": "203.0.113.51",
+      "threat": "Exfiltration",
+      "risk_score": 88,
+      "recommended_action": "recommend_isolate_lab_host",
+      "mode": "dry-run",
+      "human_approval_required": true,
+      "source_is_lab_private": true,
+      "reason": "High fused risk on an RFC1918 lab source; analyst validation required before isolation."
+    },
+    {
+      "src_ip": "10.10.4.83",
+      "dst_ip": "10.10.5.27",
+      "threat": "DDoS",
+      "risk_score": 88,
+      "recommended_action": "recommend_isolate_lab_host",
+      "mode": "dry-run",
+      "human_approval_required": true,
+      "source_is_lab_private": true,
+      "reason": "High fused risk on an RFC1918 lab source; analyst validation required before isolation."
+    },
+    {
+      "src_ip": "10.10.6.59",
+      "dst_ip": "10.10.3.75",
+      "threat": "PortScan",
+      "risk_score": 88,
+      "recommended_action": "recommend_isolate_lab_host",
+      "mode": "dry-run",
+      "human_approval_required": true,
+      "source_is_lab_private": true,
+      "reason": "High fused risk on an RFC1918 lab source; analyst validation required before isolation."
+    },
+    {
+      "src_ip": "10.10.5.178",
+      "dst_ip": "10.10.4.31",
+      "threat": "PortScan",
+      "risk_score": 88,
+      "recommended_action": "recommend_isolate_lab_host",
+      "mode": "dry-run",
+      "human_approval_required": true,
+      "source_is_lab_private": true,
+      "reason": "High fused risk on an RFC1918 lab source; analyst validation required before isolation."
+    },
+    {
+      "src_ip": "10.10.7.43",
+      "dst_ip": "10.10.7.54",
+      "threat": "PortScan",
+      "risk_score": 88,
+      "recommended_action": "recommend_isolate_lab_host",
+      "mode": "dry-run",
+      "human_approval_required": true,
+      "source_is_lab_private": true,
+      "reason": "High fused risk on an RFC1918 lab source; analyst validation required before isolation."
+    },
+    {
+      "src_ip": "10.10.1.145",
+      "dst_ip": "10.10.4.185",
+      "threat": "PortScan",
+      "risk_score": 86,
+      "recommended_action": "recommend_isolate_lab_host",
+      "mode": "dry-run",
+      "human_approval_required": true,
+      "source_is_lab_private": true,
+      "reason": "High fused risk on an RFC1918 lab source; analyst validation required before isolation."
+    },
+    {
+      "src_ip": "10.10.3.157",
+      "dst_ip": "203.0.113.157",
+      "threat": "C2Beacon",
+      "risk_score": 86,
+      "recommended_action": "recommend_isolate_lab_host",
+      "mode": "dry-run",
+      "human_approval_required": true,
+      "source_is_lab_private": true,
+      "reason": "High fused risk on an RFC1918 lab source; analyst validation required before isolation."
+    },
+    {
+      "src_ip": "10.10.4.28",
+      "dst_ip": "10.10.5.219",
+      "threat": "PortScan",
+      "risk_score": 86,
+      "recommended_action": "recommend_isolate_lab_host",
+      "mode": "dry-run",
+      "human_approval_required": true,
+      "source_is_lab_private": true,
+      "reason": "High fused risk on an RFC1918 lab source; analyst validation required before isolation."
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "autoencoder_threshold": 0.054191410541534424,
+  "threshold_percentile": 95.0,
+  "threshold_source": "held-out benign training validation set",
+  "autoencoder_report": {
+    "0": {
+      "precision": 1.0,
+      "recall": 0.9367567567567567,
+      "f1-score": 0.967345799609266,
+      "support": 1850.0
+    },
+    "1": {
+      "precision": 0.9076558800315706,
+      "recall": 1.0,
+      "f1-score": 0.9515928837401738,
+      "support": 1150.0
+    },
+    "accuracy": 0.961,
+    "macro avg": {
+      "precision": 0.9538279400157853,
+      "recall": 0.9683783783783784,
+      "f1-score": 0.95946934167472,
+      "support": 3000.0
+    },
+    "weighted avg": {
+      "precision": 0.9646014206787688,
+      "recall": 0.961,
+      "f1-score": 0.9613071818594474,
+      "support": 3000.0
+    }
+  },
+  "isolation_forest_report": {
+    "0": {
+      "precision": 0.796112115732369,
+      "recall": 0.9518918918918919,
+      "f1-score": 0.8670605612998523,
+      "support": 1850.0
+    },
+    "1": {
+      "precision": 0.8870558375634517,
+      "recall": 0.6078260869565217,
+      "f1-score": 0.7213622291021672,
+      "support": 1150.0
+    },
+    "accuracy": 0.82,
+    "macro avg": {
+      "precision": 0.8415839766479103,
+      "recall": 0.7798589894242068,
+      "f1-score": 0.7942113952010097,
+      "support": 3000.0
+    },
+    "weighted avg": {
+      "precision": 0.8309738757676175,
+      "recall": 0.82,
+      "f1-score": 0.8112095339574064,
+      "support": 3000.0
+    }
+  },
+  "features": [
+    "duration",
+    "packets",
+    "bytes_out",
+    "bytes_in",
+    "bytes_per_sec",
+    "packets_per_sec",
+    "outbound_ratio",
+    "unique_dst_ports_5m",
+    "failed_conn_5m",
+    "dns_entropy",
+    "beacon_score",
+    "burst_score",
+    "suricata_alert_count",
+    "asset_criticality"
+  ],
+  "seed": 42,
+  "epochs": 8,
+  "benign_fit_rows": 4440,
+  "benign_validation_rows": 1111,
+  "test_rows": 3000,
+  "architecture": {
+    "input_dim": 14
+  },
+  "training_seconds": 22.257
+}

@@ -1,0 +1,105 @@
+# SentinelNet pipeline execution log
+started_utc=2026-09-03T21:20:39.725312+00:00
+python=3.10.12
+platform=Linux-6.8.0-136-generic-x86_64-with-glibc2.35
+pandas=2.3.3
+numpy=2.2.6
+scikit-learn=1.7.2
+torch=2.14.0+cpu
+joblib=1.6.0
+pytest=9.1.1
+
+## 00_generate_synthetic_network_data
+command=/home/varane/SentinelNet/SentinelNetAI_Project/.worktrees/capstone-completion/.venv/bin/python scripts/00_generate_synthetic_network_data.py --rows 12000 --seed 42
+[+] wrote 12000 rows to data/synthetic_flows.csv
+exit_code=0
+elapsed_seconds=2.795
+
+## 01_profile_dataset
+command=/home/varane/SentinelNet/SentinelNetAI_Project/.worktrees/capstone-completion/.venv/bin/python scripts/01_profile_dataset.py
+{
+  "rows": 12000,
+  "label_counts": {
+    "Benign": 7401,
+    "PortScan": 1189,
+    "DDoS": 992,
+    "BruteForce": 932,
+    "Exfiltration": 772,
+    "C2Beacon": 714
+  }
+}
+exit_code=0
+elapsed_seconds=2.699
+
+## 02_train_supervised_ids
+command=/home/varane/SentinelNet/SentinelNetAI_Project/.worktrees/capstone-completion/.venv/bin/python scripts/02_train_supervised_ids.py --epochs 8 --seed 42
+epoch=1 loss=0.3515
+epoch=2 loss=0.0338
+epoch=3 loss=0.0149
+epoch=4 loss=0.0094
+epoch=5 loss=0.0063
+epoch=6 loss=0.0056
+epoch=7 loss=0.0038
+epoch=8 loss=0.0031
+{
+  "macro_f1": 0.9987246862246862,
+  "weighted_f1": 0.9993336317086317
+}
+exit_code=0
+elapsed_seconds=42.669
+
+## 03_train_autoencoder_anomaly
+command=/home/varane/SentinelNet/SentinelNetAI_Project/.worktrees/capstone-completion/.venv/bin/python scripts/03_train_autoencoder_anomaly.py --epochs 8 --seed 42 --threshold-percentile 95
+epoch=1 ae_loss=0.27234
+epoch=2 ae_loss=0.20958
+epoch=3 ae_loss=0.16133
+epoch=4 ae_loss=0.11688
+epoch=5 ae_loss=0.07964
+epoch=6 ae_loss=0.05768
+epoch=7 ae_loss=0.03669
+epoch=8 ae_loss=0.02698
+{
+  "ae_threshold": 0.054191410541534424
+}
+exit_code=0
+elapsed_seconds=48.681
+
+## 04_train_sequence_gru
+command=/home/varane/SentinelNet/SentinelNetAI_Project/.worktrees/capstone-completion/.venv/bin/python scripts/04_train_sequence_gru.py --epochs 6 --window 8 --seed 42
+epoch=1 gru_loss=1.79742
+epoch=2 gru_loss=1.79086
+epoch=3 gru_loss=1.78851
+epoch=4 gru_loss=1.78680
+epoch=5 gru_loss=1.78528
+epoch=6 gru_loss=1.78408
+{
+  "sequence_macro_f1": 0.12233491221930842,
+  "sequence_weighted_f1": 0.17952163688730666
+}
+exit_code=0
+elapsed_seconds=46.671
+
+## 05_run_streaming_detector
+command=/home/varane/SentinelNet/SentinelNetAI_Project/.worktrees/capstone-completion/.venv/bin/python scripts/05_run_streaming_detector.py --input data/synthetic_flows.csv --limit 1000
+[+] processed=1000 alerts=384 output=outputs/stream_alerts.jsonl
+exit_code=0
+elapsed_seconds=146.386
+
+## 06_generate_incident_report
+command=/home/varane/SentinelNet/SentinelNetAI_Project/.worktrees/capstone-completion/.venv/bin/python scripts/06_generate_incident_report.py
+[+] wrote outputs/incident_report.md
+exit_code=0
+elapsed_seconds=0.259
+
+## 07_response_simulator
+command=/home/varane/SentinelNet/SentinelNetAI_Project/.worktrees/capstone-completion/.venv/bin/python scripts/07_response_simulator.py
+[+] wrote outputs/response_plan_lab_only.json
+exit_code=0
+elapsed_seconds=0.259
+
+## 08_validate_deliverables
+command=/home/varane/SentinelNet/SentinelNetAI_Project/.worktrees/capstone-completion/.venv/bin/python scripts/08_validate_deliverables.py
+[+] all required deliverables are present and internally consistent
+exit_code=0
+elapsed_seconds=0.253
+
