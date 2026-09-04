@@ -1,6 +1,6 @@
 # SentinelNet Capstone Completion Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Produce a reproducible, rubric-complete SentinelNet capstone with honest AI models, trained-model alert fusion, safe response recommendations, validated evidence, and oral-defense preparation within 20 focused hours.
 
@@ -39,7 +39,7 @@
 - Produces: `profile_dataset(path: Path) -> dict`
 - Produces: deterministic CSV schema consumed by all later training tasks.
 
-- [ ] **Step 1: Add pytest and write failing deterministic-data tests**
+- [x] **Step 1: Add pytest and write failing deterministic-data tests**
 
 ```python
 def test_generate_dataset_is_deterministic(tmp_path):
@@ -55,17 +55,17 @@ def test_generated_dataset_has_expected_schema(tmp_path):
     assert not df.isna().any().any()
 ```
 
-- [ ] **Step 2: Run tests and confirm they fail because callable generation does not exist**
+- [x] **Step 2: Run tests and confirm they fail because callable generation does not exist**
 
 Run: `pytest tests/test_data_pipeline.py -v`
 
 Expected: collection or import failure for `generate_dataset` and `profile_dataset`.
 
-- [ ] **Step 3: Extract callable generation/profiling functions and add `--seed`**
+- [x] **Step 3: Extract callable generation/profiling functions and add `--seed`**
 
 Use local `random.Random(seed)` values so repeated calls do not depend on process-global state. Keep CLI defaults at 12,000 rows and seed 42. Add `pytest>=8.0` to `requirements.txt`.
 
-- [ ] **Step 4: Run focused tests and CLI smoke checks**
+- [x] **Step 4: Run focused tests and CLI smoke checks**
 
 Run: `pytest tests/test_data_pipeline.py -v`
 
@@ -73,7 +73,7 @@ Run: `python scripts/00_generate_synthetic_network_data.py --rows 120 --seed 42 
 
 Expected: all tests pass and the smoke CSV contains 120 rows plus its header.
 
-- [ ] **Step 5: Commit the independently working data stage**
+- [x] **Step 5: Commit the independently working data stage**
 
 ```bash
 git add requirements.txt scripts/00_generate_synthetic_network_data.py scripts/01_profile_dataset.py tests
@@ -94,7 +94,7 @@ git commit -m "test: make dataset generation reproducible"
 - Produces: `prepare_split(path: str, test_size: float, seed: int) -> SplitBundle`
 - `SplitBundle` contains train/test arrays, labels, fitted scaler, label encoder, features, row indices, and seed.
 
-- [ ] **Step 1: Write failing validation and scaler tests**
+- [x] **Step 1: Write failing validation and scaler tests**
 
 ```python
 def test_validate_rejects_missing_feature(sample_df):
@@ -108,17 +108,17 @@ def test_scaler_is_fit_on_training_rows_only(flow_csv):
     assert set(bundle.train_indices).isdisjoint(bundle.test_indices)
 ```
 
-- [ ] **Step 2: Verify focused failures**
+- [x] **Step 2: Verify focused failures**
 
 Run: `pytest tests/test_preprocessing.py -v`
 
 Expected: failures for missing interfaces.
 
-- [ ] **Step 3: Implement the explicit preprocessing bundle**
+- [x] **Step 3: Implement the explicit preprocessing bundle**
 
 Validate columns, numeric finiteness, known labels, feature order, and minimum class counts. Preserve `split_scaled()` as a compatibility wrapper around `prepare_split()`.
 
-- [ ] **Step 4: Verify preprocessing and existing script imports**
+- [x] **Step 4: Verify preprocessing and existing script imports**
 
 Run: `pytest tests/test_preprocessing.py -v`
 
@@ -126,7 +126,7 @@ Run: `python -m py_compile scripts/*.py`
 
 Expected: tests pass and all scripts compile.
 
-- [ ] **Step 5: Commit the preprocessing contract**
+- [x] **Step 5: Commit the preprocessing contract**
 
 ```bash
 git add scripts/sentinel_utils.py tests/test_preprocessing.py
@@ -148,7 +148,7 @@ git commit -m "feat: validate flows and prevent preprocessing leakage"
 - Produces: `load_supervised_artifacts(model_path: Path, preprocess_path: Path) -> tuple[IDSNet, dict]`
 - Produces: `models/supervised_ids.pt`, `models/preprocess.joblib`, and `outputs/supervised_metrics.json`.
 
-- [ ] **Step 1: Write a failing round-trip test**
+- [x] **Step 1: Write a failing round-trip test**
 
 ```python
 def test_supervised_artifacts_round_trip(tmp_path):
@@ -161,17 +161,17 @@ def test_supervised_artifacts_round_trip(tmp_path):
     assert metadata["features"] == FEATURES
 ```
 
-- [ ] **Step 2: Confirm the test fails because architecture/loading are duplicated or absent**
+- [x] **Step 2: Confirm the test fails because architecture/loading are duplicated or absent**
 
 Run: `pytest tests/test_supervised_model.py -v`
 
 Expected: import failure for shared artifact helpers.
 
-- [ ] **Step 3: Centralize architecture and record experiment metadata**
+- [x] **Step 3: Centralize architecture and record experiment metadata**
 
 Save the state dictionary with architecture configuration and include seed, split size, class counts, epochs, features, macro F1, weighted F1, classification report, confusion matrix, and training duration in the metrics JSON.
 
-- [ ] **Step 4: Train a short model and verify reload**
+- [x] **Step 4: Train a short model and verify reload**
 
 Run: `python scripts/02_train_supervised_ids.py --epochs 2 --seed 42`
 
@@ -179,7 +179,7 @@ Run: `pytest tests/test_supervised_model.py -v`
 
 Expected: metrics are generated and a new process can load the model.
 
-- [ ] **Step 5: Commit the supervised model contract**
+- [x] **Step 5: Commit the supervised model contract**
 
 ```bash
 git add scripts/model_defs.py scripts/02_train_supervised_ids.py scripts/05_run_streaming_detector.py tests/test_supervised_model.py
@@ -201,7 +201,7 @@ git commit -m "feat: make supervised IDS artifacts loadable"
 - Produces: `select_benign_threshold(errors: np.ndarray, percentile: float) -> float`
 - Produces: `models/autoencoder.pt`, `models/isolation_forest.joblib`, `models/anomaly_preprocess.joblib`, and `outputs/anomaly_metrics.json`.
 
-- [ ] **Step 1: Write failing threshold and serialization tests**
+- [x] **Step 1: Write failing threshold and serialization tests**
 
 ```python
 def test_threshold_uses_requested_benign_percentile():
@@ -212,15 +212,15 @@ def test_anomaly_score_increases_above_threshold():
     assert normalized_anomaly_score(2.0, threshold=1.0) > normalized_anomaly_score(0.5, threshold=1.0)
 ```
 
-- [ ] **Step 2: Verify the tests fail on missing helpers**
+- [x] **Step 2: Verify the tests fail on missing helpers**
 
 Run: `pytest tests/test_anomaly_model.py -v`
 
-- [ ] **Step 3: Split benign training data into fit and validation subsets**
+- [x] **Step 3: Split benign training data into fit and validation subsets**
 
 Fit the autoencoder on benign-fit samples, derive the threshold from benign-validation errors at the configured percentile, evaluate once on the held-out test set, and save scaler, feature list, threshold, percentile, architecture, and seed.
 
-- [ ] **Step 4: Train and verify both anomaly artifacts**
+- [x] **Step 4: Train and verify both anomaly artifacts**
 
 Run: `python scripts/03_train_autoencoder_anomaly.py --epochs 2 --seed 42 --threshold-percentile 95`
 
@@ -228,7 +228,7 @@ Run: `pytest tests/test_anomaly_model.py -v`
 
 Expected: tests pass; both detectors and anomaly preprocessing metadata load successfully.
 
-- [ ] **Step 5: Commit anomaly training**
+- [x] **Step 5: Commit anomaly training**
 
 ```bash
 git add scripts/model_defs.py scripts/03_train_autoencoder_anomaly.py tests/test_anomaly_model.py
@@ -249,7 +249,7 @@ git commit -m "feat: select anomaly thresholds without test leakage"
 - Produces: `make_sequences(values, labels, timestamps, window) -> tuple[np.ndarray, np.ndarray]`
 - Produces: `models/sequence_gru.pt`, `models/sequence_preprocess.joblib`, and `outputs/sequence_metrics.json`.
 
-- [ ] **Step 1: Write failing shape and artifact tests**
+- [x] **Step 1: Write failing shape and artifact tests**
 
 ```python
 def test_sequence_windows_preserve_temporal_shape():
@@ -264,15 +264,15 @@ def test_gru_forward_shape():
     assert model(torch.zeros(3, 8, 14)).shape == (3, 6)
 ```
 
-- [ ] **Step 2: Verify failures against the current flattened MLP implementation**
+- [x] **Step 2: Verify failures against the current flattened MLP implementation**
 
 Run: `pytest tests/test_sequence_model.py -v`
 
-- [ ] **Step 3: Implement chronological splitting and the compact GRU**
+- [x] **Step 3: Implement chronological splitting and the compact GRU**
 
 Sort by timestamp, choose the chronological boundary first, fit scaling on pre-boundary rows, build train and test windows without crossing the boundary, and train with seeded PyTorch. Save model configuration, window length, feature order, scaler, label encoder, metrics, confusion matrix, and training duration.
 
-- [ ] **Step 4: Apply the two-hour decision gate**
+- [x] **Step 4: Apply the two-hour decision gate**
 
 Run: `python scripts/04_train_sequence_gru.py --epochs 2 --window 8 --seed 42`
 
@@ -280,7 +280,7 @@ Run: `pytest tests/test_sequence_model.py -v`
 
 Expected: a binary PyTorch checkpoint loads and runs inference. If training is unstable or runtime threatens required outputs, restore the working sequence MLP under `sequence_model.joblib`, rename its metric type accurately, and remove the fake `.pt` checkpoint.
 
-- [ ] **Step 5: Commit the truthful sequence implementation**
+- [x] **Step 5: Commit the truthful sequence implementation**
 
 ```bash
 git add scripts/model_defs.py scripts/04_train_sequence_gru.py tests/test_sequence_model.py
@@ -303,7 +303,7 @@ git commit -m "feat: train a real temporal sequence detector"
 - Produces: `calculate_risk(evidence: DetectionEvidence, row: pd.Series) -> RiskBreakdown`
 - Produces: `outputs/stream_alerts.jsonl` and `outputs/fusion_summary.json`.
 
-- [ ] **Step 1: Write failing risk and alert-contract tests**
+- [x] **Step 1: Write failing risk and alert-contract tests**
 
 ```python
 def test_risk_is_bounded_and_decomposable():
@@ -316,15 +316,15 @@ def test_alert_contains_analyst_evidence(detector_bundle, attack_row):
     assert {"confidence", "risk_score", "mitre_technique", "evidence", "risk_components"} <= alert.keys()
 ```
 
-- [ ] **Step 2: Confirm failures on the heuristic-only detector**
+- [x] **Step 2: Confirm failures on the heuristic-only detector**
 
 Run: `pytest tests/test_detection.py -v`
 
-- [ ] **Step 3: Implement artifact loading and fixed fusion weights**
+- [x] **Step 3: Implement artifact loading and fixed fusion weights**
 
 Use a 100-point decomposition: supervised confidence 45, normalized anomaly evidence 20, sequence confidence 10, telemetry heuristic 10, Suricata alert count 5, and asset criticality 10. Clamp every normalized input to `[0, 1]`, round components consistently, and expose all components in each alert. Load medium/high thresholds from `config.json`.
 
-- [ ] **Step 4: Run detector tests and a 200-row integration sample**
+- [x] **Step 4: Run detector tests and a 200-row integration sample**
 
 Run: `pytest tests/test_detection.py -v`
 
@@ -332,7 +332,7 @@ Run: `python scripts/05_run_streaming_detector.py --input data/synthetic_flows.c
 
 Expected: alerts contain model and risk evidence; summary counts match JSONL lines.
 
-- [ ] **Step 5: Commit model-based fusion**
+- [x] **Step 5: Commit model-based fusion**
 
 ```bash
 git add config.json scripts/detection.py scripts/05_run_streaming_detector.py tests/test_detection.py
@@ -352,7 +352,7 @@ git commit -m "feat: fuse trained detector evidence into risk scores"
 - Produces: `build_response_plan(alerts: list[dict]) -> dict`
 - Produces: `outputs/response_plan_lab_only.json` with no execution capability.
 
-- [ ] **Step 1: Write failing proportionality and safety tests**
+- [x] **Step 1: Write failing proportionality and safety tests**
 
 ```python
 @pytest.mark.parametrize(("risk", "action"), [(40, "monitor"), (75, "escalate_to_tier2"), (90, "recommend_isolate_lab_host")])
@@ -367,15 +367,15 @@ def test_external_source_is_never_recommended_for_isolation():
     assert result["recommended_action"] == "escalate_to_tier2"
 ```
 
-- [ ] **Step 2: Verify the current script fails the explicit safety contract**
+- [x] **Step 2: Verify the current script fails the explicit safety contract**
 
 Run: `pytest tests/test_response_simulator.py -v`
 
-- [ ] **Step 3: Remove misleading execution behavior and implement pure recommendations**
+- [x] **Step 3: Remove misleading execution behavior and implement pure recommendations**
 
 Accept input/output paths, validate alert fields and IP addresses, distinguish private lab sources, add reason and human-approval fields, and perform no subprocess, firewall, or network calls.
 
-- [ ] **Step 4: Run tests and generate the response plan**
+- [x] **Step 4: Run tests and generate the response plan**
 
 Run: `pytest tests/test_response_simulator.py -v`
 
@@ -383,7 +383,7 @@ Run: `python scripts/07_response_simulator.py`
 
 Expected: every action is dry-run and includes a safety rationale.
 
-- [ ] **Step 5: Commit safe response logic**
+- [x] **Step 5: Commit safe response logic**
 
 ```bash
 git add scripts/07_response_simulator.py tests/test_response_simulator.py
@@ -405,7 +405,7 @@ git commit -m "feat: enforce dry-run lab response recommendations"
 - Produces: `validate_deliverables(project_root: Path) -> list[str]`, returning validation errors.
 - Produces: an incident report with metrics, top alerts, three alert investigations, limitations, and analyst recommendations.
 
-- [ ] **Step 1: Write failing report and validation tests**
+- [x] **Step 1: Write failing report and validation tests**
 
 ```python
 def test_validator_reports_missing_required_artifact(tmp_path):
@@ -418,15 +418,15 @@ def test_incident_report_contains_required_sections(populated_outputs):
         assert heading in report
 ```
 
-- [ ] **Step 2: Verify tests fail on the minimal report generator**
+- [x] **Step 2: Verify tests fail on the minimal report generator**
 
 Run: `pytest tests/test_reporting.py -v`
 
-- [ ] **Step 3: Implement evidence-rich reporting and validation**
+- [x] **Step 3: Implement evidence-rich reporting and validation**
 
 Validate required files, JSON syntax, JSONL syntax, non-empty model checkpoints, expected metric keys, alert counts, dry-run response fields, and report headings. Map every assessment component to its exact evidence path in `docs/evidence_index.md`.
 
-- [ ] **Step 4: Generate and validate current artifacts**
+- [x] **Step 4: Generate and validate current artifacts**
 
 Run: `python scripts/06_generate_incident_report.py`
 
@@ -436,7 +436,7 @@ Run: `pytest tests/test_reporting.py -v`
 
 Expected: validator exits zero only when all required artifacts are present and internally consistent.
 
-- [ ] **Step 5: Commit reporting and evidence validation**
+- [x] **Step 5: Commit reporting and evidence validation**
 
 ```bash
 git add scripts/06_generate_incident_report.py scripts/08_validate_deliverables.py tests/test_reporting.py docs/evidence_index.md
@@ -458,7 +458,7 @@ git commit -m "feat: validate capstone evidence and enrich reporting"
 - Produces: `run_stage(name: str, command: list[str], log) -> None`
 - Produces: a single documented command that executes all required stages and records each command, exit code, elapsed time, and key output.
 
-- [ ] **Step 1: Write a failing dry-run command-order test**
+- [x] **Step 1: Write a failing dry-run command-order test**
 
 ```python
 def test_pipeline_dry_run_has_required_order():
@@ -477,15 +477,15 @@ def test_pipeline_dry_run_has_required_order():
     ]
 ```
 
-- [ ] **Step 2: Verify the orchestrator test fails**
+- [x] **Step 2: Verify the orchestrator test fails**
 
 Run: `pytest tests/test_pipeline_cli.py -v`
 
-- [ ] **Step 3: Implement fail-fast orchestration and document commands**
+- [x] **Step 3: Implement fail-fast orchestration and document commands**
 
 Use `sys.executable`, stream output to both terminal and `outputs/execution_log.txt`, stop on the first nonzero exit, and record environment/package versions. Add quick and final profiles so tests use small data while the official run uses 12,000 rows and final epochs.
 
-- [ ] **Step 4: Run all tests, then the official pipeline**
+- [x] **Step 4: Run all tests, then the official pipeline**
 
 Run: `pytest -q`
 
@@ -495,7 +495,7 @@ Run: `python scripts/08_validate_deliverables.py`
 
 Expected: tests pass, the complete run exits zero, and validation reports every required artifact as valid.
 
-- [ ] **Step 5: Commit the reproducible final run**
+- [x] **Step 5: Commit the reproducible final run**
 
 ```bash
 git add README.md scripts/09_run_pipeline.py tests/test_pipeline_cli.py models outputs
@@ -518,19 +518,19 @@ git commit -m "build: generate reproducible capstone evidence"
 - Consumes: final metrics, model metadata, alerts, response plan, execution log, evidence index, and actual environment versions.
 - Produces: the final written submission and a concise defense package whose claims exactly match generated evidence.
 
-- [ ] **Step 1: Extract final facts and populate the supplied report structure**
+- [x] **Step 1: Extract final facts and populate the supplied report structure**
 
 Complete all ten report sections and both appendices. Include a model comparison table, confusion matrix, false-positive analysis, three alert investigations, fusion formula, ATT&CK mappings, response rationale, required limitation statements, commands, and evidence paths.
 
-- [ ] **Step 2: Render and inspect the report**
+- [x] **Step 2: Render and inspect the report**
 
 Render the DOCX to page images and PDF using the bundled document runtime. Inspect every page for clipping, broken tables, missing content, inconsistent headings, and awkward page breaks. Correct and rerender until clean.
 
-- [ ] **Step 3: Build defense notes from evidence**
+- [x] **Step 3: Build defense notes from evidence**
 
 For each component, answer: purpose, input, method, metric, strongest result, limitation, safety concern, and production improvement. Include concise answers to the 15 likely defense questions from the approved design discussion.
 
-- [ ] **Step 4: Run final rubric and reproduction audit**
+- [x] **Step 4: Run final rubric and reproduction audit**
 
 Run: `pytest -q`
 
@@ -538,7 +538,7 @@ Run: `python scripts/08_validate_deliverables.py`
 
 Check that every value quoted in the report exists in the final JSON evidence, every model name is accurate, every response is dry-run, and every rubric row maps to a file or oral-defense item.
 
-- [ ] **Step 5: Commit the final submission package**
+- [x] **Step 5: Commit the final submission package**
 
 ```bash
 git add submission docs/evidence_index.md

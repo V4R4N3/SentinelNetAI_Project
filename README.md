@@ -28,3 +28,11 @@ python scripts/09_run_pipeline.py --profile final --seed 42
 The quick profile is for development checks. Use the final profile for submitted metrics and evidence. The sequence stage is a genuine PyTorch GRU that predicts each flow label from the preceding eight flows. Because the synthetic generator samples labels independently, weak next-flow performance is an expected limitation rather than evidence that the supervised flow classifier failed.
 
 Safety: response is dry-run by default. Do not use this project to scan or disrupt networks.
+
+## Submission Package
+
+- `submission/SentinelNet_Capstone_Report.pdf` - final eight-page report.
+- `submission/SentinelNet_Capstone_Report.docx` - editable report based on the supplied AICS-109 template.
+- `submission/defense_notes.md` - evidence-backed oral defense notes and likely questions.
+- `submission/presentation_outline.md` - eleven-slide presentation structure.
+- `submission/final_checklist.md` - automated gates and final human upload checks.
