@@ -43,7 +43,7 @@
 ## Slide 7 Fusion and ATT&CK Mapping
 
 - 100-point score: supervised 45, anomaly 20, sequence 10, telemetry 10, sensor 5, asset 10.
-- 1,000 flows processed; 384 alerts at score 65 or higher.
+- Integration demonstration: 1,000 flows processed and 384 alerts at score 65 or higher; this is not an independent evaluation set.
 - Example mappings: T1498 DDoS, T1110 Brute Force, T1041 Exfiltration, T1071 C2, T1046 Network Service Discovery.
 
 ## Slide 8 Alert Investigation
@@ -70,6 +70,5 @@
 
 - One-command final pipeline.
 - Versioned models, metrics, alerts, report, response plan, and execution log.
-- 33 automated tests plus a deliverable consistency validator.
+- 38 automated tests plus a deliverable consistency validator.
 - End with the claim: SentinelNet is a defensible, reproducible lab prototype with explicit safety boundaries.
-

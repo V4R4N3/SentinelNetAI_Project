@@ -14,7 +14,7 @@ SentinelNet is a reproducible lab prototype that turns network-flow telemetry in
 - A fusion engine with an auditable risk decomposition.
 - ATT&CK tactic and technique mappings for the five attack classes.
 - A response simulator that never executes containment.
-- A validator, 33 automated tests, and a single-command final pipeline.
+- A validator, 38 automated tests, and a single-command final pipeline.
 
 ## Architecture Walkthrough
 
@@ -37,8 +37,8 @@ SentinelNet is a reproducible lab prototype that turns network-flow telemetry in
 - Autoencoder anomaly macro F1: 0.9595; threshold 0.05419 at the 95th percentile of held-out benign training errors.
 - Isolation Forest anomaly macro F1: 0.7942.
 - GRU sequence macro F1: 0.1223; weighted F1 0.1795.
-- Streaming evaluation: 1,000 flows processed and 384 alerts at risk score 65 or higher.
-- Verification: 33 tests passed and the deliverable validator passed.
+- Streaming integration demonstration: 1,000 flows processed and 384 alerts at risk score 65 or higher. This stream overlaps the training corpus and is not an independent evaluation set.
+- Verification: 38 tests passed and the deliverable validator passed.
 
 ## Why The GRU Result Is Low
 
@@ -89,6 +89,8 @@ The maximum score is 100 points: supervised 45, anomaly 20, sequence 10, telemet
 **What happens if a model artifact is missing or inconsistent?** The detector cannot silently substitute a fake model, and the deliverable validator fails when required artifacts, counts, schemas, or safety invariants are missing or inconsistent.
 
 **How is reproducibility demonstrated?** The data seed, model seeds, command sequence, package versions, timings, model metadata, and outputs are recorded. The final pipeline rebuilds the evidence set from one command.
+
+**Is the 1,000-flow stream an independent evaluation?** No. It is an end-to-end integration demonstration over the first 1,000 generated rows, which overlap the model-development corpus. Generalization claims come only from the held-out model test partitions.
 
 **What did automated testing cover?** Tests cover deterministic generation, schema validation, train-only preprocessing, checkpoint reloads, anomaly threshold selection, sequence windows, fusion arithmetic, confidence semantics, response safety, reporting, validation, and pipeline command construction.
 

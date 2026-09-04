@@ -1,6 +1,15 @@
 #!/usr/bin/env python3
 import json
 from pathlib import Path
+import sys
+
+
+SCRIPT_DIR = Path(__file__).resolve().parent
+if str(SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(SCRIPT_DIR))
+
+from detection import DetectorBundle
+from sentinel_utils import FEATURES
 
 
 REQUIRED_OUTPUTS = (
@@ -32,6 +41,39 @@ def _load_json(path, errors):
         return None
 
 
+def _validate_model_artifacts(models, errors):
+    if any(not (models / name).exists() for name in REQUIRED_MODELS):
+        return
+    try:
+        bundle = DetectorBundle.load(models)
+        expected_features = list(FEATURES)
+        metadata_items = (
+            ('supervised', bundle.supervised_metadata),
+            ('anomaly', bundle.anomaly_metadata),
+            ('sequence', bundle.sequence_metadata),
+        )
+        for name, metadata in metadata_items:
+            if metadata.get('features') != expected_features:
+                raise ValueError(f'{name} feature order does not match detector features')
+            scaler = metadata.get('scaler')
+            if getattr(scaler, 'n_features_in_', None) != len(expected_features):
+                raise ValueError(f'{name} scaler dimension is incompatible')
+        if bundle.supervised_metadata.get('classes') != bundle.sequence_metadata.get('classes'):
+            raise ValueError('supervised and sequence class orders differ')
+        if bundle.supervised_model.config.get('in_dim') != len(expected_features):
+            raise ValueError('supervised model input dimension is incompatible')
+        if bundle.autoencoder.config.get('input_dim') != len(expected_features):
+            raise ValueError('autoencoder input dimension is incompatible')
+        if bundle.sequence_model.config.get('input_dim') != len(expected_features):
+            raise ValueError('sequence model input dimension is incompatible')
+        if float(bundle.anomaly_metadata.get('threshold', 0)) <= 0:
+            raise ValueError('anomaly threshold must be positive')
+        if getattr(bundle.isolation_forest, 'n_features_in_', None) != len(expected_features):
+            raise ValueError('Isolation Forest input dimension is incompatible')
+    except Exception as exc:
+        errors.append(f'{models}: model artifacts are not loadable or compatible ({exc})')
+
+
 def validate_deliverables(project_root):
     root = Path(project_root)
     outputs = root / 'outputs'
@@ -45,6 +87,7 @@ def validate_deliverables(project_root):
         path = models / name
         if not path.exists() or path.stat().st_size == 0:
             errors.append(f'missing or empty required model: {path}')
+    _validate_model_artifacts(models, errors)
 
     metric_requirements = {
         'supervised_metrics.json': {'macro_f1', 'weighted_f1', 'confusion_matrix'},

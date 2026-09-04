@@ -102,4 +102,3 @@ command=/home/varane/SentinelNet/SentinelNetAI_Project/.worktrees/capstone-compl
 [+] all required deliverables are present and internally consistent
 exit_code=0
 elapsed_seconds=0.253
-

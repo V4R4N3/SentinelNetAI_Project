@@ -78,6 +78,11 @@ def run_stage(name, command, log):
         raise subprocess.CalledProcessError(return_code, command)
 
 
+def normalize_log_ending(path):
+    path = Path(path)
+    path.write_text(path.read_text().rstrip() + '\n')
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--profile', choices=sorted(PROFILES), default='quick')
@@ -91,6 +96,7 @@ def main():
         write_environment(log)
         for command in commands:
             run_stage(Path(command[1]).stem, command, log)
+    normalize_log_ending(log_path)
     print(f'[+] pipeline profile={args.profile} complete; log={log_path}')
 
 

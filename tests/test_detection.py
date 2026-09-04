@@ -1,6 +1,16 @@
 import importlib
 
 
+RISK_WEIGHTS = {
+    "supervised": 45,
+    "anomaly": 20,
+    "sequence": 10,
+    "telemetry": 10,
+    "sensor": 5,
+    "asset": 10,
+}
+
+
 def example_row():
     return {
         "timestamp": "2026-01-01T00:00:00",
@@ -32,7 +42,7 @@ def example_evidence(detection):
 def test_risk_is_bounded_and_decomposable():
     detection = importlib.import_module("scripts.detection")
 
-    result = detection.calculate_risk(example_evidence(detection), example_row())
+    result = detection.calculate_risk(example_evidence(detection), example_row(), RISK_WEIGHTS)
 
     assert result.total == 72
     assert result.total == sum(result.components.values())
@@ -55,7 +65,7 @@ def test_risk_clamps_out_of_range_inputs():
     row["suricata_alert_count"] = 100
     row["asset_criticality"] = 100
 
-    result = detection.calculate_risk(evidence, row)
+    result = detection.calculate_risk(evidence, row, RISK_WEIGHTS)
 
     assert 0 <= result.total <= 100
 
@@ -66,7 +76,7 @@ def test_alert_contains_analyst_evidence():
     alert = detection.build_alert(
         example_row(),
         example_evidence(detection),
-        detection.calculate_risk(example_evidence(detection), example_row()),
+        detection.calculate_risk(example_evidence(detection), example_row(), RISK_WEIGHTS),
     )
 
     assert {
@@ -93,7 +103,30 @@ def test_alert_confidence_matches_selected_threat():
     )
 
     alert = detection.build_alert(
-        example_row(), evidence, detection.calculate_risk(evidence, example_row())
+        example_row(), evidence, detection.calculate_risk(evidence, example_row(), RISK_WEIGHTS)
     )
 
     assert alert["confidence"] == 0.6
+
+
+def test_risk_uses_supplied_fusion_weights():
+    detection = importlib.import_module("scripts.detection")
+    weights = {
+        "supervised": 10,
+        "anomaly": 20,
+        "sequence": 30,
+        "telemetry": 15,
+        "sensor": 15,
+        "asset": 10,
+    }
+
+    result = detection.calculate_risk(example_evidence(detection), example_row(), weights)
+
+    assert result.components == {
+        "supervised": 8,
+        "anomaly": 10,
+        "sequence": 12,
+        "telemetry": 10,
+        "sensor": 15,
+        "asset": 10,
+    }

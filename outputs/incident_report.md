@@ -1,6 +1,6 @@
 # SentinelNet AI Defense Fabric - Incident and Model Report
 
-Generated: 2026-09-03T21:25:30.005677+00:00
+Generated: 2026-09-04T09:26:48.469087+00:00
 
 ## Executive Summary
 
@@ -11,8 +11,8 @@ SentinelNet processed network-flow telemetry with supervised, anomaly, sequence,
 | Model | Macro F1 | Weighted F1 | Role |
 |---|---:|---:|---|
 | Residual MLP | 0.9987 | 0.9993 | Multiclass flow classification |
-| Autoencoder | 0.9516 | not reported | Reconstruction anomaly detection |
-| Isolation Forest | 0.7214 | not reported | Tree-based anomaly detection |
+| Autoencoder | 0.9595 | 0.9613 | Reconstruction anomaly detection |
+| Isolation Forest | 0.7942 | 0.8112 | Tree-based anomaly detection |
 | Sequence GRU | 0.1223 | 0.1795 | Next-flow temporal classification |
 
 The autoencoder threshold was 0.054191410541534424 at the 95.0th percentile of held-out benign training reconstruction errors.

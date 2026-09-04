@@ -1,5 +1,7 @@
 import importlib
 import json
+from pathlib import Path
+import shutil
 
 
 def write_json(path, value):
@@ -32,8 +34,16 @@ def test_incident_report_contains_required_sections(tmp_path):
         {
             "autoencoder_threshold": 0.5,
             "threshold_percentile": 95,
-            "autoencoder_report": {"1": {"f1-score": 0.8}},
-            "isolation_forest_report": {"1": {"f1-score": 0.75}},
+            "autoencoder_report": {
+                "1": {"f1-score": 0.8},
+                "macro avg": {"f1-score": 0.72},
+                "weighted avg": {"f1-score": 0.74},
+            },
+            "isolation_forest_report": {
+                "1": {"f1-score": 0.75},
+                "macro avg": {"f1-score": 0.62},
+                "weighted avg": {"f1-score": 0.64},
+            },
         },
     )
     write_json(
@@ -56,3 +66,17 @@ def test_incident_report_contains_required_sections(tmp_path):
 
     for heading in ["Model Comparison", "Alert Investigations", "False Positives", "Limitations"]:
         assert heading in report
+    assert "| Autoencoder | 0.7200 | 0.7400 |" in report
+    assert "| Isolation Forest | 0.6200 | 0.6400 |" in report
+
+
+def test_validator_rejects_corrupt_model_artifact(tmp_path):
+    validator = importlib.import_module("scripts.08_validate_deliverables")
+    project_root = Path(__file__).resolve().parents[1]
+    shutil.copytree(project_root / "models", tmp_path / "models")
+    shutil.copytree(project_root / "outputs", tmp_path / "outputs")
+    (tmp_path / "models/supervised_ids.pt").write_bytes(b"not-a-checkpoint")
+
+    errors = validator.validate_deliverables(tmp_path)
+
+    assert any("model artifacts are not loadable or compatible" in error for error in errors)

@@ -2,7 +2,7 @@
 
 ## Automated Gates Completed
 
-- [x] Full test suite passes: 33 tests.
+- [x] Full test suite passes: 38 tests.
 - [x] Deliverable validator passes.
 - [x] Git diff whitespace check passes.
 - [x] Final pipeline execution log records successful exit codes for every stage.
@@ -23,7 +23,7 @@
 
 ## Human Checks Before Upload
 
-- [ ] Add the exact student name and registration identifier if the submission portal requires them.
+- [x] Student identity added: ijudigal jarafu, registration number 2026/AICDF/16789.
 - [ ] Confirm the portal accepts the repository archive size and model binary file types.
 - [ ] Open the final PDF once on the submission device and confirm every page displays.
 - [ ] Upload the repository or required archive, report PDF, and report DOCX.
@@ -33,5 +33,5 @@
 
 - `SentinelNet_Capstone_Report.pdf`
 - `SentinelNet_Capstone_Report.docx`
-- Complete Git repository at commit `969fea8` or later.
+- Complete Git repository at the final `capstone-completion` branch HEAD.
 - Optional presentation support: `presentation_outline.md` and `defense_notes.md`.

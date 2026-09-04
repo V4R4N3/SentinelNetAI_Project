@@ -21,6 +21,7 @@ def main():
         args.models_dir,
         args.limit,
         medium_threshold,
+        config['fusion_weights'],
     )
     output_dir = Path('outputs')
     output_dir.mkdir(exist_ok=True)

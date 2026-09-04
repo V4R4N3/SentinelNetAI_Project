@@ -199,14 +199,21 @@ def score_flow(row, bundle):
     )
 
 
-def calculate_risk(evidence, row):
+def calculate_risk(evidence, row, weights):
+    required = {'supervised', 'anomaly', 'sequence', 'telemetry', 'sensor', 'asset'}
+    if set(weights) != required:
+        raise ValueError(f'fusion weights must contain exactly: {sorted(required)}')
+    if any(float(weight) < 0 for weight in weights.values()):
+        raise ValueError('fusion weights must be non-negative')
+    if round(sum(float(weight) for weight in weights.values())) != 100:
+        raise ValueError('fusion weights must sum to 100')
     components = {
-        'supervised': round(45 * _clamp(evidence.supervised_confidence)),
-        'anomaly': round(20 * _clamp(evidence.anomaly_score)),
-        'sequence': round(10 * _clamp(evidence.sequence_confidence)),
-        'telemetry': round(10 * _clamp(evidence.heuristic_score)),
-        'sensor': round(5 * _clamp(float(row.get('suricata_alert_count', 0)) / 3.0)),
-        'asset': round(10 * _clamp(float(row.get('asset_criticality', 1)) / 5.0)),
+        'supervised': round(weights['supervised'] * _clamp(evidence.supervised_confidence)),
+        'anomaly': round(weights['anomaly'] * _clamp(evidence.anomaly_score)),
+        'sequence': round(weights['sequence'] * _clamp(evidence.sequence_confidence)),
+        'telemetry': round(weights['telemetry'] * _clamp(evidence.heuristic_score)),
+        'sensor': round(weights['sensor'] * _clamp(float(row.get('suricata_alert_count', 0)) / 3.0)),
+        'asset': round(weights['asset'] * _clamp(float(row.get('asset_criticality', 1)) / 5.0)),
     }
     return RiskBreakdown(total=min(100, sum(components.values())), components=components)
 
@@ -246,14 +253,14 @@ def build_alert(row, evidence, risk):
     }
 
 
-def run_streaming_detector(input_path, models_dir, limit, medium_threshold):
+def run_streaming_detector(input_path, models_dir, limit, medium_threshold, risk_weights):
     dataframe = pd.read_csv(input_path).head(limit)
     validate_flow_dataframe(dataframe)
     bundle = DetectorBundle.load(models_dir)
     alerts = []
     for _, row in dataframe.iterrows():
         evidence = score_flow(row, bundle)
-        risk = calculate_risk(evidence, row)
+        risk = calculate_risk(evidence, row, risk_weights)
         if risk.total >= medium_threshold:
             alerts.append(build_alert(row, evidence, risk))
     return len(dataframe), alerts
